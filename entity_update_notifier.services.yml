@@ -1,0 +1,9 @@
+services:
+  entity_update_notifier.email_sender:
+    class: Drupal\entity_update_notifier\Service\EmailSender
+    arguments:
+      - '@config.factory'
+      - '@entity_type.manager'
+      - '@database'
+      - '@language_manager'
+      - '@plugin.manager.mail'

@@ -1,0 +1,9 @@
+name: Entity Update Notifier
+type: module
+description: 'Sends email notifications for entity updates.'
+package: Other
+core_version_requirement: ^9 || ^10 || ^11
+configure: entity_update_notifier.settings
+dependencies:
+  - drupal:node
+  - drupal:taxonomy

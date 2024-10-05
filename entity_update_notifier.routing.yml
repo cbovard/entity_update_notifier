@@ -1,0 +1,15 @@
+entity_update_notifier.settings:
+  path: '/admin/config/system/entity-update-notifier'
+  defaults:
+    _form: '\Drupal\entity_update_notifier\Form\EntityUpdateNotifierSettingsForm'
+    _title: 'Entity Update Notifier Settings'
+  requirements:
+    _permission: 'administer entity update notifier'
+
+entity_update_notifier.send_emails:
+  path: '/admin/config/system/entity-update-notifier/send-emails'
+  defaults:
+    _controller: '\Drupal\entity_update_notifier\Controller\EntityUpdateNotifierController::sendEmails'
+    _title: 'Send Update Emails'
+  requirements:
+    _permission: 'administer entity update notifier'

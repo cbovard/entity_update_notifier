@@ -1,0 +1,3 @@
+administer entity update notifier:
+  title: 'Administer Entity Update Notifier'
+  description: 'Access the Entity Update Notifier settings page and send update emails.'

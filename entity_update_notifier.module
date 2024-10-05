@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * @file
+ * Contains entity_update_notifier.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Component\Utility\Xss;
+
+/**
+ * Implements hook_help().
+ */
+function entity_update_notifier_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.entity_update_notifier':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Entity Update Notifier module sends email notifications for entity updates.') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_mail().
+ *
+ */
+function entity_update_notifier_mail($key, &$message, $params) {
+
+  $site_name = \Drupal::config('system.site')->get('name');
+  $site_mail = \Drupal::config('system.site')->get('mail');
+
+  switch ($key) {
+    case 'entity_update_notification':
+      $message['headers']['Reply-To'] = $site_mail;
+      $message['headers']['Content-Type'] = 'text/html; charset=utf-8; format=flowed; delsp=yes';
+      $message['headers']['From'] = $site_name .'<' . $site_mail . '>';
+      $message['subject'] = t('@subject', array('@subject' => $params['subject']));
+      $message['body'][] = Xss::filter($params['body'], ['a', 'b', 'br', 'em', 'i', 'strong', 'u', 'p']);
+      break;
+  }
+}
+
+/**
+ * Implements hook_cron().
+ */
+function entity_update_notifier_cron() {
+  \Drupal::service('entity_update_notifier.email_sender')->sendUpdateEmails();
+}

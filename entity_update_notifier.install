@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Entity Update Notifier module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function entity_update_notifier_schema() {
+  $schema['entity_update_notifier_node'] = [
+    'description' => 'Stores the last node update information.',
+    'fields' => [
+      'nid' => [
+        'description' => 'The node ID.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'type' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'The Node Content Type.',
+      ],
+      'updated_time' => [
+        'description' => 'The timestamp of the last email notification sent.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['nid'],
+  ];
+
+  $schema['entity_update_notifier_term'] = [
+    'description' => 'Stores the last term update information.',
+    'fields' => [
+      'tid' => [
+        'description' => 'The Term ID.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'vid' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'The vocabulary ID.',
+      ],
+      'updated_time' => [
+        'description' => 'The timestamp of the last email notification sent.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['tid'],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function entity_update_notifier_uninstall() {
+  \Drupal::configFactory()->getEditable('entity_update_notifier.settings')->delete();
+}

@@ -1,0 +1,6 @@
+entity_update_notifier.settings:
+  title: 'Entity Update Notifier'
+  description: 'Configure Entity Update Notifier settings.'
+  parent: system.admin_config_system
+  route_name: entity_update_notifier.settings
+  weight: 100
